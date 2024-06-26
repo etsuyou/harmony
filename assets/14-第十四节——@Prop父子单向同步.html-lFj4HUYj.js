@@ -1,0 +1,46 @@
+import{_ as n,c as s,o as a,d as p}from"./app-CZ3kukTv.js";const e={},l=p(`<h2 id="一、概念" tabindex="-1"><a class="header-anchor" href="#一、概念"><span>一、概念</span></a></h2><p>@Prop装饰的变量可以和父组件建立单向的同步关系。@Prop装饰的变量是可变的，但是变化不会同步回其父组件。</p><h2 id="二、注意" tabindex="-1"><a class="header-anchor" href="#二、注意"><span>二、注意</span></a></h2><ul><li>对父组件状态变量值的修改，将同步给子组件@Prop装饰的变量，子组件@Prop变量的修改不会同步到父组件的状态变量上</li><li>仅支持string、number、boolean、enum类型。不支持any，不允许使用undefined和null。必须指定类型。</li><li>如果本地有初始化，则当前组件的是可选的。没有的话，则必选</li><li>@Prop装饰的变量是私有的，只能在组件内访问。</li><li>@Prop装饰的值为必传参数</li></ul><h2 id="三、使用" tabindex="-1"><a class="header-anchor" href="#三、使用"><span>三、使用</span></a></h2><div class="language-typescript line-numbers-mode" data-highlighter="prismjs" data-ext="ts" data-title="ts"><pre class="language-typescript"><code><span class="line"></span>
+<span class="line"><span class="token keyword">interface</span> <span class="token class-name">Info</span> <span class="token punctuation">{</span></span>
+<span class="line">  name<span class="token operator">:</span> <span class="token builtin">string</span></span>
+<span class="line">  age<span class="token operator">:</span> <span class="token builtin">number</span></span>
+<span class="line"><span class="token punctuation">}</span></span>
+<span class="line"></span>
+<span class="line"><span class="token decorator"><span class="token at operator">@</span><span class="token function">Component</span></span></span>
+<span class="line">struct PropsComponent <span class="token punctuation">{</span></span>
+<span class="line"></span>
+<span class="line">  <span class="token doc-comment comment">/**</span>
+<span class="line">   * 当前组件接收一个参数为name</span>
+<span class="line">   * 当前参数为必传参数</span>
+<span class="line">   */</span></span>
+<span class="line">  <span class="token decorator"><span class="token at operator">@</span><span class="token function">Prop</span></span> name<span class="token operator">:</span> <span class="token builtin">string</span><span class="token punctuation">;</span></span>
+<span class="line">  <span class="token decorator"><span class="token at operator">@</span><span class="token function">Prop</span></span> num<span class="token operator">:</span> <span class="token builtin">number</span></span>
+<span class="line"></span>
+<span class="line"></span>
+<span class="line">  <span class="token function">build</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span></span>
+<span class="line">    <span class="token function">Column</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span></span>
+<span class="line">      <span class="token function">Text</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span>name<span class="token punctuation">)</span></span>
+<span class="line">      <span class="token function">Text</span><span class="token punctuation">(</span><span class="token string">&#39;父组件传过来的&#39;</span> <span class="token operator">+</span> <span class="token keyword">this</span><span class="token punctuation">.</span>num<span class="token punctuation">)</span></span>
+<span class="line">    <span class="token punctuation">}</span></span>
+<span class="line">  <span class="token punctuation">}</span></span>
+<span class="line"><span class="token punctuation">}</span></span>
+<span class="line"></span>
+<span class="line"></span>
+<span class="line"><span class="token decorator"><span class="token at operator">@</span><span class="token function">Entry</span></span></span>
+<span class="line"><span class="token decorator"><span class="token at operator">@</span><span class="token function">Component</span></span></span>
+<span class="line">struct LearnProps <span class="token punctuation">{</span></span>
+<span class="line">  <span class="token doc-comment comment">/**</span>
+<span class="line">   * 如果@State装饰的属性改变不能触发视图重新渲染</span>
+<span class="line">   * 那么子组件不会发生变化</span>
+<span class="line">   */</span></span>
+<span class="line">  <span class="token decorator"><span class="token at operator">@</span><span class="token function">State</span></span> num<span class="token operator">:</span> <span class="token builtin">number</span> <span class="token operator">=</span> <span class="token number">1</span></span>
+<span class="line"></span>
+<span class="line">  <span class="token function">build</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span></span>
+<span class="line">    <span class="token function">Column</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span></span>
+<span class="line">      <span class="token function">Button</span><span class="token punctuation">(</span><span class="token string">&#39;+1&#39;</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">onClick</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span></span>
+<span class="line">        <span class="token comment">// 每次点击子组件也会重新渲染</span></span>
+<span class="line">        <span class="token keyword">this</span><span class="token punctuation">.</span>num <span class="token operator">+=</span> <span class="token number">1</span></span>
+<span class="line">      <span class="token punctuation">}</span><span class="token punctuation">)</span></span>
+<span class="line">      <span class="token function">PropsComponent</span><span class="token punctuation">(</span><span class="token punctuation">{</span> name<span class="token operator">:</span> <span class="token string">&quot;张三&quot;</span><span class="token punctuation">,</span> num<span class="token operator">:</span> <span class="token keyword">this</span><span class="token punctuation">.</span>num <span class="token punctuation">}</span><span class="token punctuation">)</span></span>
+<span class="line">    <span class="token punctuation">}</span></span>
+<span class="line">  <span class="token punctuation">}</span></span>
+<span class="line"><span class="token punctuation">}</span></span>
+<span class="line"></span></code></pre><div class="line-numbers" aria-hidden="true" style="counter-reset:line-number 0;"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><h2 id="四、更新流程" tabindex="-1"><a class="header-anchor" href="#四、更新流程"><span>四、更新流程</span></a></h2><h3 id="初始渲染" tabindex="-1"><a class="header-anchor" href="#初始渲染"><span>初始渲染</span></a></h3><p>执行父组件的build()函数将创建子组件的新实例，将数据源传递给子组件； 初始化子组件@Prop装饰的变量。</p><h3 id="更新" tabindex="-1"><a class="header-anchor" href="#更新"><span>更新</span></a></h3><p>子组件@Prop更新时，更新仅停留在当前子组件，不会同步回父组件； 当父组件的数据源更新时，子组件的@Prop装饰的变量将被来自父组件的数据源重置，所有@Prop装饰的本地的修改将被父组件的更新覆盖</p>`,11),t=[l];function i(c,o){return a(),s("div",null,t)}const r=n(e,[["render",i],["__file","14-第十四节——@Prop父子单向同步.html.vue"]]),d=JSON.parse('{"path":"/ArkTS/14-%E7%AC%AC%E5%8D%81%E5%9B%9B%E8%8A%82%E2%80%94%E2%80%94@Prop%E7%88%B6%E5%AD%90%E5%8D%95%E5%90%91%E5%90%8C%E6%AD%A5.html","title":"","lang":"en-US","frontmatter":{},"headers":[{"level":2,"title":"一、概念","slug":"一、概念","link":"#一、概念","children":[]},{"level":2,"title":"二、注意","slug":"二、注意","link":"#二、注意","children":[]},{"level":2,"title":"三、使用","slug":"三、使用","link":"#三、使用","children":[]},{"level":2,"title":"四、更新流程","slug":"四、更新流程","link":"#四、更新流程","children":[{"level":3,"title":"初始渲染","slug":"初始渲染","link":"#初始渲染","children":[]},{"level":3,"title":"更新","slug":"更新","link":"#更新","children":[]}]}],"git":{},"filePathRelative":"ArkTS/14-第十四节——@Prop父子单向同步.md"}');export{r as comp,d as data};
